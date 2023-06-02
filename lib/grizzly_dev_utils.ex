@@ -23,7 +23,7 @@ defmodule Grizzly.DevUtils do
 
     # maybe stop z/ip gateway
     if restart_zipgateway? do
-      _ = Supervisor.terminate_child(__MODULE__, MuonTrap.Daemon)
+      _ = Supervisor.terminate_child(Grizzly.ZIPGateway.Supervisor, MuonTrap.Daemon)
     end
 
     # delete all rows from the s2 span table
@@ -33,7 +33,7 @@ defmodule Grizzly.DevUtils do
 
     # maybe restart z/ip gateway
     if restart_zipgateway? do
-      {:ok, _} = Supervisor.start_child(__MODULE__, MuonTrap.Daemon)
+      {:ok, _} = Supervisor.restart_child(Grizzly.ZIPGateway.Supervisor, MuonTrap.Daemon)
     end
 
     :ok
